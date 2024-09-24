@@ -1,7 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
+/* import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import GlobalStyles from "../styles/GlobalStyles";
 import PageNotFound from "../pages/PageNotFound";
 import AppLayout from "../ui/AppLayout";
@@ -12,23 +9,10 @@ import Cabins from "../pages/Cabins";
 import Users from "../pages/Users";
 import Settings from "../pages/Settings";
 import Account from "../pages/Account";
-import { Toaster } from "react-hot-toast";
-
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // staleTime: 60 * 1000, // 1 minute this is the default value
-      staleTime: 0, // this will make the data always fresh
-    },
-  },
-});
-
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+    <>
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
@@ -45,29 +29,49 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-
-      <Toaster
-        position="top-center"
-        gutter={12}
-        containerStyle={{ margin: "8px" }}
-        toastOptions={{
-          success: {
-            duration: 3000,
-          },
-          error: {
-            duration: 5000,
-          },
-          style: {
-            fontSize: "16px",
-            maxWidth: "500px",
-            padding: "16px 24px",
-            backgroundColor: "var(--color-grey-0)",
-            color: "var(--color-grey-700)",
-          },
-        }}
-      />
-    </QueryClientProvider>
+    </>
   );
 }
 
 export default App;
+ */
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Example />
+    </QueryClientProvider>
+  );
+}
+
+function Example() {
+  const { isPending, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      fetch("https://api.github.com/repos/TanStack/query").then((res) =>
+        res.json()
+      ),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
+  return (
+    <div>
+      <h1>{data.name}</h1>
+      <p>{data.description}</p>
+      <strong>👀 {data.subscribers_count}</strong>{" "}
+      <strong>✨ {data.stargazers_count}</strong>{" "}
+      <strong>🍴 {data.forks_count}</strong>
+    </div>
+  );
+}
