@@ -14,7 +14,7 @@ export async function getSettings() {
 export async function updateSetting(newSetting) {
   const { data, error } = await supabase
     .from("settings")
-    .upsert(newSetting)
+    .update(newSetting)
     // There is only one setting in the table, so we can use the id to update it
     .eq("id", 1)
     .single();

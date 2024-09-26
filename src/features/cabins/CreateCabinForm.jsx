@@ -8,8 +8,8 @@ import FileInput from "../../styled_components/FileInput";
 import Textarea from "../../styled_components/Textarea";
 import FormRow from "../../styled_components/FormRow";
 
-import { useCreateCabin } from "./useCreateCabin";
-import { useEditCabin } from "./useEditCabin";
+import { useCreateCabin } from "./hooks/useCreateCabin";
+import { useEditCabin } from "./hooks/useEditCabin";
 
 function CreateCabinForm({ cabinToEdit = {} }) {
   const { isCreating, createCabin } = useCreateCabin();

@@ -10,9 +10,9 @@ const AppLayout = () => {
       <Sidebar />
 
       <Main>
-      <Container>
-        <Outlet />
-      </Container>
+        <Container>
+          <Outlet />
+        </Container>
       </Main>
     </StyledAppLayout>
   );
@@ -34,6 +34,6 @@ const Main = styled.main`
 `;
 
 const Container = styled.div`
-  max-width: 120rem;
+  max-width: 100rem;
   margin: 0 auto;
 `;

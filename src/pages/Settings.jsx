@@ -1,8 +1,15 @@
+import UpdateSettingsForm from "../features/settings/UpdateSettingsForm";
 import Heading from "../styled_components/Heading";
+import Row from "../styled_components/Row";
 
 
-const Settings = () => {
-    return <Heading as="h1">Update hotel settings</Heading>;
+function Settings() {
+  return (
+    <Row>
+      <Heading as="h1">Update hotel settings</Heading>
+      <UpdateSettingsForm />
+    </Row>
+  );
 }
 
-export default Settings
+export default Settings;

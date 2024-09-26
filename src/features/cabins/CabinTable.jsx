@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import CabinRow from "./CabinRow";
 import Spinner from "../../styled_components/Spinner";
-import { useCabins } from "./useCabins";
+import { useCabins } from "./hooks/useCabins";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
