@@ -15,8 +15,8 @@ const FormRow = ({ label, error, children, orientation }) => {
 FormRow.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
-  children: PropTypes.node.isRequired,
-  orientation: PropTypes.oneOf(["vertical", "horizontal"]).isRequired,
+  children: PropTypes.node,
+  orientation: PropTypes.oneOf(["vertical", "horizontal"]),
 };
 
 export default FormRow;
