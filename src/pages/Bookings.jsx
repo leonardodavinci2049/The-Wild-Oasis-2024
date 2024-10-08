@@ -1,13 +1,19 @@
+import BookingTable from "../features/bookings/BookingTable";
+import BookingTableOperations from "../features/bookings/BookingTableOperations";
 import Heading from "../styled_components/Heading";
 import Row from "../styled_components/Row";
 
-const Bookings = () => {
+function Bookings() {
   return (
-    <Row>
-      <Heading as="h1">All bookings</Heading>
-      <p>TEST</p>
-    </Row>
+    <>
+      <Row type="horizontal">
+        <Heading as="h1">All bookings</Heading>
+        <BookingTableOperations />
+      </Row>
+
+      <BookingTable />
+    </>
   );
-};
+}
 
 export default Bookings;
