@@ -1,4 +1,4 @@
-import Button from 'ui/Button';
+import Button from '../../styled_components/Button';
 import { useCheckout } from './useCheckout';
 
 function CheckoutButton({ bookingId }) {

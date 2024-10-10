@@ -1,15 +1,20 @@
+import DashboardFilter from "../features/dashboard/DashboardFilter";
+import DashboardLayout from "../features/dashboard/DashboardLayout";
 import Heading from "../styled_components/Heading"
 import Row from "../styled_components/Row"
 
 
-const Dashboard = () => {
+function Dashboard() {
   return (
-    <Row>
+    <>
+      <Row type="horizontal">
         <Heading as="h1">Dashboard</Heading>
-        <p>TEST</p>
-      
-    </Row>
-  )
+        <DashboardFilter />
+      </Row>
+
+      <DashboardLayout />
+    </>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

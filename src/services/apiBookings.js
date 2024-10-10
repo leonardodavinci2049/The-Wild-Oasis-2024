@@ -1,6 +1,6 @@
-import { PAGE_SIZE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
+import { PAGE_SIZE } from "../utils/constants";
 
 export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
@@ -42,8 +42,6 @@ export async function getBooking(id) {
     .eq("id", id)
     .single();
 
-
-  
   if (error) {
     console.error(error);
     throw new Error("Booking not found");
