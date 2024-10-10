@@ -1,7 +1,20 @@
 import styled from "styled-components";
+import LoginForm from "../features/authentication/LoginForm";
+import Logo from "../ui/Logo";
+import Heading from "../styled_components/Heading";
+import CabinTable from "../features/cabins/CabinTable";
+
 
 const Login = () => {
-  return <LoginLayout> Login</LoginLayout>;
+  return (
+    <LoginLayout>
+      <Logo />
+      <Heading as='h4'>Log in to your account</Heading>
+      <LoginForm />
+      
+    </LoginLayout>
+
+  );
 };
 
 export default Login;

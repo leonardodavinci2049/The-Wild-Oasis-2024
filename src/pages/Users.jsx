@@ -1,8 +1,13 @@
+import SignupForm from "../features/authentication/SignupForm";
 import Heading from "../styled_components/Heading";
 
-
 const Users = () => {
-    return <Heading as="h1">Create a new user</Heading>;
-}
+  return (
+    <>
+      <Heading as="h1">Create a new user</Heading>
+      <SignupForm />
+    </>
+  );
+};
 
-export default Users
+export default Users;

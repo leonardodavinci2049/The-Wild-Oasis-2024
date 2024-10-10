@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import Spinner from "../../styled_components/Spinner";
 import BookingDataBox from "./BookingDataBox";
@@ -9,14 +9,15 @@ import Tag from "../../styled_components/Tag";
 import ButtonGroup from "../../styled_components/ButtonGroup";
 import Button from "../../styled_components/Button";
 import Modal from "../../styled_components/Modal";
-import ConfirmDelete from "ui/ConfirmDelete";
-
-import { useBooking } from "features/bookings/useBooking";
+import ConfirmDelete from "../../styled_components/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
-import { useMoveBack } from "hooks/useMoveBack";
-import { useCheckout } from "features/check-in-out/useCheckout";
 import ButtonText from "../../styled_components/ButtonText";
 import Empty from "../../styled_components/Empty";
+
+import useMoveBack from "../../hooks/useMoveBack";
+import { useCheckout } from "../check-in-out/useCheckout";
+import { HiArrowUpOnSquare } from "react-icons/hi2";
+import { useBooking } from "./useBooking";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -25,15 +26,17 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const { booking } = useBooking();
-  const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
-  const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
+  const { booking, isLoading } = useBooking();
+  const { checkout, isCheckingOut } = useCheckout();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
 
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
-  // if (isLoading) return <Spinner />;
-  // if (!booking) return <Empty resource='booking' />;
+  if (isLoading) return <Spinner />;
+  if (!booking) return <Empty resourceName="booking" />;
+
+  const { status, id: bookingId } = booking;
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -41,14 +44,11 @@ function BookingDetail() {
     "checked-out": "silver",
   };
 
-  const { id: bookingId, status } = booking;
-
-  // We return a fragment so that these elements fit into the page's layout
   return (
     <>
       <Row type="horizontal">
         <HeadingGroup>
-          <Heading type="h1">Booking #{bookingId}</Heading>
+          <Heading as="h1">Booking #{bookingId}</Heading>
           <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
@@ -64,21 +64,29 @@ function BookingDetail() {
         )}
 
         {status === "checked-in" && (
-          <Button onClick={() => checkout(bookingId)} disabled={isCheckingOut}>
+          <Button
+            icon={<HiArrowUpOnSquare />}
+            onClick={() => checkout(bookingId)}
+            disabled={isCheckingOut}
+          >
             Check out
           </Button>
         )}
 
         <Modal>
-          <Modal.Toggle opens="delete">
+          <Modal.Open opens="delete">
             <Button variation="danger">Delete booking</Button>
-          </Modal.Toggle>
+          </Modal.Open>
+
           <Modal.Window name="delete">
             <ConfirmDelete
-              resource="booking"
-              // These options will be passed wherever the function gets called, and they determine what happens next
-              onConfirm={(options) => deleteBooking(bookingId, options)}
+              resourceName="booking"
               disabled={isDeleting}
+              onConfirm={() =>
+                deleteBooking(bookingId, {
+                  onSettled: () => navigate(-1),
+                })
+              }
             />
           </Modal.Window>
         </Modal>
